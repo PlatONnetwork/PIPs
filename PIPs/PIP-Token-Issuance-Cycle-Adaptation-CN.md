@@ -1,6 +1,6 @@
 ---
 PIP:  100
-Topic: 调整令牌的增发周期|[English](./PIP-100.md)
+Topic: 调整令牌的增发周期|[English](./PIP-Token-Issuance-Cycle-Adaptation.md)
 Author: jianghaitao
 Status: Draft
 Type: Requirement

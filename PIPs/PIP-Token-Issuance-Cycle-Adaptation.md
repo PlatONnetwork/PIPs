@@ -1,6 +1,6 @@
 ---
 PIP:  100
-Topic: Token issuance cycle adaptation|[简体中文](./PIP-100-CN.md)
+Topic: Token issuance cycle adaptation|[简体中文](./PIP-Token-Issuance-Cycle-Adaptation-CN.md)
 Author: jianghaitao
 Status: Draft
 Type: Requirement
