@@ -70,26 +70,39 @@ We use the time stamp of the first block as the starting time of the first year,
 and calculate the average of the previous year (based on the number of settlement cycles 
 experienced in the first year) in the last block of each settlement cycle The block interval 
 is as follows:
+
 N: number of settlement cycles in the first year
+
 Hn: height of the last block in the current settlement cycle
+
 Hl: Hn> N? Hn-N: 1 (the height of the last block of N settlement cycles from Hn forward, 
     if Hn is greater than N, Hl is Hn-N, otherwise Hl = 1)
+	
 Tn: timestamp of the last block of the current settlement cycle (ms)
+
 Tl: timestamp corresponding to Hl
+
 I: block interval
 
 Calculate the average block interval:
+
 I = Floor ((Tn-Tl) / (Hn-Hl))
 
 #### Calculate the number of remaining settlement cycles for the current year
 
 Set:
+
 n: the number of additional issuances in the current settlement cycle (the first additional 
    issuance was in the genesis block)
+   
 Y: 31557600000 milliseconds (365 + 1/4 days)
+
 T0: timestamp of the first block (milliseconds)
+
 Tn: timestamp of the last block of the current settlement cycle (ms)
+
 C: 10750 (number of blocks per settlement cycle)
+
 L: number of settlement cycles remaining in the current issuance cycle
 
 then:
@@ -98,16 +111,25 @@ L = Ceiling (((T0 + n * Y)-Tn) / I * C)
 #### Calculate the block reward and pledge reward for the current settlement cycle
 
 Set:
+
 Ml: Total number of annual remaining tokens at the beginning of the current settlement cycle
+
 V: Total number of validators corresponding to the block height at the end of the settlement cycle
+
 L: The current issue cycle includes the number of settlement cycles remaining in the current settlement cycle
+
 Rb: Fixed reward for block production
+
 Rs: Pledged rewards received by each node
+
 R: Reward ratio (percentage) of the block giver in the reward
 
 then:
+
 Rb = Ml * R / C * L
+
 Rs = Ml * (1-R) / (L * V)
+
 
 #### Foundation lockup release plan adjustment
 
