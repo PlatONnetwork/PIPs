@@ -4,8 +4,8 @@ topic: PIP Purpose and Guidelines
 status: Active
 type: Meta
 author: 
-created: 
-updated: 
+created: 2020/02/26
+updated: 2020/02/26
 ---
 
 ## What is a PIP?
@@ -20,14 +20,14 @@ For PlatON implementers, PIPs are a convenient way to track the progress of thei
 
 ## PIP Types
 
-There are four types of PIP:
+There are some types of PIP:
 
 Need to vote on the chain：
 - **Parameter**： Proposals for Parameter track must modify governable parameters on the chain. 
 - **Upgrade**： Proposals for Upgrade track must initiate a voting upgrade on the chain, a complete installation package needs to be prepared before initiating the proposal.
 - **Cancellation**：Proposals of Cancellation track are used to cancel the upgrading and parameter proposals in voting in the chain. We will only initiate this proposal in exceptional circumstances.
 
-No needs to vote on the chain：
+Text proposals include the following two types, and in general, no voting is required. Votes can be initiated through text proposals in important or divergent situations.
 
 - **Meta** : Proposals made to the Meta track must affect changes to PIP-1. 
 - **Requirement**:  Proposals made to the Meta track must be clear about new functions, optimization functions, etc.
@@ -73,11 +73,10 @@ Any further changes are unlikely and PIP client developers should consider this 
 
 Once the parameters, upgrade and cancellation proposals are accepted, voting can be initiated on the chain.
 
-**Note**：   Only alternative nodes can initiate on chain proposals. If the PIP author is not an alternative node, it can be initiated by any alternative node instead.
+**Note**：Only alternative nodes can initiate on chain proposals. If the PIP author is not an alternative node, it can be initiated by any alternative node instead.
 
 - :arrow_right: Pass: after voting on the chain, PIP editor needs to modify the proposal status to pass.
 - :arrow_right: Fail: when the voting on the chain fails, PIP editor needs to modify the proposal status to fail.
-  
 
 Other exceptional statuses include:
 
@@ -184,4 +183,3 @@ This document borrows from [Ethereum’s EIP-1](https://github.com/ethereum/EIPs
 ## Copyright
 
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
-
