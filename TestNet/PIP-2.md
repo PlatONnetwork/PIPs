@@ -1,7 +1,7 @@
 ---
-PIP:  XXX
+PIP:  2
 Topic: 测试网参数优化
-Author: 
+Author: Vivi
 Status: 草稿
 Type: 升级
 Description: 
@@ -30,6 +30,8 @@ Created: 2020-03-04
 
 版本分支: 0.10.0-unstable
 GitHub Commit: 0130bce6cb6fc4d45590053957214a7a229550ff
+
+
 
 
 
