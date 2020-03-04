@@ -2,13 +2,13 @@
 PIP:  2
 Topic: 测试网参数优化
 Author: Vivi
-Status: 草稿
-Type: 升级
-Description: 
+Status: Final
+Type: Upgrade
+Description: 测试网参数优化
 Created: 2020-03-04
 ---
 
-# PIP-X：测试网参数优化-降低节点退出质押锁定周期和参数投票周期
+# PIP-2：测试网参数优化-降低节点退出质押锁定周期和参数投票周期
 
 ## 升级背景
 
