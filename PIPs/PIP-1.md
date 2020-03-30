@@ -6,6 +6,7 @@ type: Meta
 author: 
 created: 2020/02/26
 updated: 2020/02/26
+---
 
 ## What is a PIP?
 
@@ -175,8 +176,6 @@ Many PIPs are written and maintained by developers with write access to the Plat
 
 The editors don't pass judgment on PIPs. We merely do the administrative & editorial part.
 
-
-The current AGP Editors are:
 
 ## History
 
