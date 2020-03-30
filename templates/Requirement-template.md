@@ -27,6 +27,4 @@ and the section can be split into multiple sections and subsections.
 ## References
 
 This is a section for references such as links to other documents 
-
 or to reference implementations.
-
