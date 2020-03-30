@@ -7,9 +7,6 @@ Type: Cancellation
 Description: 
 Created: 2019-11-18
 
----
-
-
 
 # PIP-X：Example Title
 

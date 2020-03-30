@@ -6,7 +6,6 @@ type: Meta
 author: 
 created: 2020/02/26
 updated: 2020/02/26
----
 
 ## What is a PIP?
 
@@ -176,6 +175,9 @@ Many PIPs are written and maintained by developers with write access to the Plat
 
 The editors don't pass judgment on PIPs. We merely do the administrative & editorial part.
 
+
+The current AGP Editors are:
+
 ## History
 
 This document borrows from [Ethereum’s EIP-1](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1.md) written by Martin Becze and Hudson Jameson, which itself was derived from [Bitcoin's BIP-0001](https://github.com/bitcoin/bips/blob/master/bip-0001.mediawiki) written by Amir Taaki, which in turn was derived from [Python's PEP-0001](https://www.python.org/dev/peps/pep-0001/). In many places text was simply copied and modified.  Although the PEP-0001 text was written by Barry Warsaw, Jeremy Hylton, and David Goodger, they are not responsible for its use in the PlatON Improvement Process, and should not be bothered with technical questions specific to PlatON or the PIP. Please direct all comments to the PIP editors.
@@ -183,3 +185,4 @@ This document borrows from [Ethereum’s EIP-1](https://github.com/ethereum/EIPs
 ## Copyright
 
 Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
+

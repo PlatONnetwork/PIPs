@@ -7,7 +7,6 @@ Type: Requirement
 Description: 
 Created: 2019-11-18
 
----
 
 # PIP-X：Example Title
 
@@ -27,4 +26,8 @@ and the section can be split into multiple sections and subsections.
 ## References
 
 This is a section for references such as links to other documents 
+<<<<<<< HEAD
 or to reference implementations.
+=======
+or to reference implementations.
+>>>>>>> self/master
