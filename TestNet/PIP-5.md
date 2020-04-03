@@ -8,7 +8,7 @@ Description: 支持WASM合约和优化零出块处罚机制
 Created: 2020-04-03
 ---
 
-# PIP-5：支持WASM合约与处罚策略优化
+# PIP-5：PlatON版本升级-0.11.0
 
 ## 目的
 
