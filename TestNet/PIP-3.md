@@ -2,7 +2,7 @@
 PIP:  3
 Topic: 提议对零出块处罚机制做优化
 Author: alliswell
-Status: DRAFT 
+Status: Final 
 Type: Requirement
 Discussions-to: https://forum.latticex.foundation/t/topic/1210/20
 Description: 关于节点错过出块期被处罚场景的优化

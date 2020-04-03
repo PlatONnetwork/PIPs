@@ -2,7 +2,7 @@
 PIP:  4
 Topic: 提议支持WASM合约并修复测试网部分bug
 Author: alliswell
-Status: DRAFT 
+Status: Final 
 Type: Requirement
 Description: 关于支持WASM合约和修复部分bug的提议
 Created: 2020-03-30
