@@ -2,7 +2,7 @@
 PIP:  2
 Topic: 测试网参数优化
 Author: Vivi
-Status: Final
+Status: Pass
 Type: Upgrade
 Description: 测试网参数优化
 Created: 2020-03-04
