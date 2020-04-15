@@ -4,6 +4,7 @@ Topic: 提议支持共识节点的出块顺序随机化
 Author: luowei
 Status: Draft 
 Type: Requirement
+Discussions-to: https://forum.latticex.foundation/t/topic/1673
 Description: 共识节点的出块顺序随机化
 Created: 2020-04-14
 ---
