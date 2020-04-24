@@ -21,7 +21,7 @@ Created: 2020-04-24
 
 ## 优化
 
-- [关于零出块节点处罚机制优化的提案](https://github.com/PlatONnetwork/PIPs/blob/master/TestNet/PIP-3.md)
+- [关于节点出块顺序随机化的提案](https://github.com/PlatONnetwork/PIPs/blob/master/TestNet/PIP-8.md)
 
 - 对在节点质押交易所在的同一个区块内的对该节点的委托交易做了限制，不能立即委托。
 
