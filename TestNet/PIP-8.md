@@ -21,7 +21,9 @@ Created: 2020-04-24
 
 ## 优化
 
-- [关于节点出块顺序随机化的提案](https://github.com/PlatONnetwork/PIPs/blob/master/TestNet/PIP-8.md)
+- Storage存储优化
+
+  将上个版本中对value增加引用计数的方式修改为value中增加Keccake256(address+key)以区分不同的key，防止value被优化机制清理掉
 
 - 对在节点质押交易所在的同一个区块内的对该节点的委托交易做了限制，不能立即委托。
 
