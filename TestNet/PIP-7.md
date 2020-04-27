@@ -1,5 +1,5 @@
 ---
-PIP:  8
+PIP:  7
 Topic: 0.12.0升级提案
 Author: alliswell
 Status: Final 
@@ -8,16 +8,16 @@ Description: 存储优化和节点出块顺序随机化功能升级
 Created: 2020-04-24
 ---
 
-# PIP-8：PlatON版本升级-0.12.0
+# PIP-7：PlatON版本升级-0.12.0
 
 ## 目的
 
-近期[关于节点出块顺序随机化的提案](https://github.com/PlatONnetwork/PIPs/blob/master/TestNet/PIP-7.md)经过重复讨论和论证，建议合理且方法可行，本次升级将支持这个提案，同时针对原0.11.0版本临时通过引用计数修改的存储问题在本版本从根本上进行了修复和优化。另外，由于在同一个区块节点质押后立即对其委托会导致委托详情不准确问题，本次升级一并进行优化。
+近期[关于节点出块顺序随机化的提案](https://github.com/PlatONnetwork/PIPs/blob/master/TestNet/PIP-6.md)经过重复讨论和论证，建议合理且方法可行，本次升级将支持这个提案，同时针对原0.11.0版本临时通过引用计数修改的存储问题在本版本从根本上进行了修复和优化。另外，由于在同一个区块节点质押后立即对其委托会导致委托详情不准确问题，本次升级一并进行优化。
 
 
 ## 新特性
 
-[节点出块顺序随机化](https://github.com/PlatONnetwork/PIPs/blob/master/TestNet/PIP-7.md)
+[节点出块顺序随机化](https://github.com/PlatONnetwork/PIPs/blob/master/TestNet/PIP-6.md)
 
 ## 优化功能
 
