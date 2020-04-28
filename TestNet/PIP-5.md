@@ -2,7 +2,7 @@
 PIP:  5
 Topic: 0.11.0升级提案
 Author: alliswell
-Status: Final 
+Status: Pass
 Type: Upgrade
 Description: 支持WASM合约和优化零出块处罚机制
 Created: 2020-04-03
