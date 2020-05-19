@@ -6,7 +6,7 @@ Status: Draft
 Type: Requirement
 Discussions-to: https://forum.latticex.foundation/t/topic/2529
 Description: 提议PlatON地址格式支持bech32编码规范
-Created: 2020-05-08
+Created: 2020-05-19
 ---
 
 # PIP-9：提议PlatON地址支持bech32编码

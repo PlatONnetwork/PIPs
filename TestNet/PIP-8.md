@@ -6,7 +6,7 @@ Status: Draft
 Type: Requirement
 Discussions-to: https://forum.latticex.foundation/t/topic/2300
 Description: 节点委托奖励的比例修改做限制
-Created: 2020-04-21
+Created: 2020-05-19
 ---
 
 # PIP-8：限制节点委托奖励比例修改的最短操作时间及幅度
