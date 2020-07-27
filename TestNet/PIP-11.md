@@ -2,7 +2,7 @@
 PIP:  11
 Topic: 零出块惩罚规则优化
 Author: luowei
-Status: Draft
+Status: Final
 Type: Requirement
 Description: 对零出块的节点只锁定一定期限不解除质押
 Created: 2020-07-16
