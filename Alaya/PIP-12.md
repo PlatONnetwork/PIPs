@@ -3,15 +3,14 @@ PIP:  12
 Topic: Alaya网络优化升级提案
 Author: alliswell
 Status: Draft 
-Type: Requirement
-Discussions-to: https://forum.latticex.foundation/t/topic/4024
-Description: 关于节点分成比例的几个bug修复以及一些其他的优化
+Type: Upgrade
+Description: 关于节点分成比例的bug修复以及一些其他的优化
 Created: 2020-11-26
 ---
 
-# PIP-12：关于节点分成比例的bug修复以及一些其他的优化
+# PIP-12：PlatON版本升级-0.14.0
 
-## 背景
+## 目的
 
    自Alaya上线以来获得了很多节点和用户的广泛关注，用户在使用Alaya网络的过程中也遇到了一些问题，以下是近期收到用户反馈的部分问题：
 
@@ -38,11 +37,15 @@ Created: 2020-11-26
 
 为加强Alaya网络的健壮性性，提升用户体验，综合各个节点的意见，提议升级Alaya网络。
 
-## 目的
+## 新特性
 
-充分保证Alaya网络安全性、健壮性的同时，提升用户体验，修复已知问题。
+无
 
-## 内容
+## 优化功能
+
+- keytool工具名改为platonkey或alayakey
+
+## bug修复
 
 ### 修改分成比例失败问题
 
@@ -119,10 +122,18 @@ Created: 2020-11-26
 
 ### 用mtool修改节点信息，会导致分成比例被重新修改回旧值
 
+详细见[这里](https://github.com/PlatONnetwork/PlatON-Go/issues/1602), 
+
 修改方案：
 将分成比例修改为非必填字段，这样mtool每次调用接口时如果用户没有指定修改分成比例底层将跳过
 
+## 说明
 
+本次升级将兼容历史数据，需要链上治理升级。详见[链接](https://forum.latticex.foundation/t/topic/4024)
 
+## 版本信息
 
+本次升级的版本号为：0.14.0
+
+Commit-ID: 83c6dd6a20be631ef99bf4094e5eefeac559e7e2
 
