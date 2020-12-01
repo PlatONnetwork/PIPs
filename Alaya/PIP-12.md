@@ -115,14 +115,14 @@ Created: 2020-11-26
 
 ### badblock问题
 
-详细见[这里](https://github.com/PlatONnetwork/PlatON-Go/issues/1525), 
+详细见[#1525](https://github.com/PlatONnetwork/PlatON-Go/issues/1525), 
 
 修改方案：
 在storagevalue中加当前块高，影响到存储，需要改记账规则
 
 ### 用mtool修改节点信息，会导致分成比例被重新修改回旧值
 
-详细见[这里](https://github.com/PlatONnetwork/PlatON-Go/issues/1602), 
+详细见[#1602](https://github.com/PlatONnetwork/PlatON-Go/issues/1602), 
 
 修改方案：
 将分成比例修改为非必填字段，这样mtool每次调用接口时如果用户没有指定修改分成比例底层将跳过
