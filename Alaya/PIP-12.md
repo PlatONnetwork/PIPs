@@ -8,7 +8,7 @@ Description: 关于节点分成比例的bug修复以及一些其他的优化
 Created: 2020-11-26
 ---
 
-# PIP-12：PlatON版本升级-0.14.0
+# PIP-12：Alaya版本升级-0.14.0
 
 ## 目的
 
