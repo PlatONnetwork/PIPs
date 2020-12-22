@@ -112,7 +112,7 @@ ACTION bool UpdateMetaData(const h256 &note_hash, const bytes &meta_data,
 
 **Param:** signature 签名，含有该 note 的转账交易的发送者签名
 
-**Return:** 供给总量
+**Return:** 更新是否成功
 
 **OPTIONAL** 推荐实现该接口来提升钱包及交易所的可用性，但其它合约不能依赖其接口的存在
 
