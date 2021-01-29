@@ -2,7 +2,7 @@
 PIP:  14
 Topic: Alaya网络优化升级提案
 Author: alliswell
-Status: Draft 
+Status: Final 
 Type: Upgrade
 Description: 关于支持同时使用锁仓和自有Token进行质押功能以及一些其他的优化
 Created: 2021-01-25
