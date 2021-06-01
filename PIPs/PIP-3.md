@@ -1,5 +1,5 @@
 ---
-PIP: 2
+PIP: 3
 Topic: PlatON网络优化升级提案
 Author: alliswell
 Status: Draft
@@ -8,7 +8,7 @@ Description: PlatON网络优化升级，修复已知问题
 Created: 2021-06-01
 ---
 
-# PIP-2：PlatON网络优化升级提案
+# PIP-3：PlatON网络优化升级提案
 
 ## 目的
 
