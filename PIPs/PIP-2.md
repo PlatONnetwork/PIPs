@@ -26,7 +26,7 @@ Created: 2021-06-01
 
 - platonkey工具优化，genblskeypair命令输出BlsProof
 
-- 开放获取Slashing状态的接口getWaitSlashingNodeList[issue-1787](https://github.com/PlatONnetwork/PlatON-Go/issues/1787)
+- 开放获取Slashing状态的getWaitSlashingNodeList接口[issue-1787](https://github.com/PlatONnetwork/PlatON-Go/issues/1787)
 
 ## bug修复
 
