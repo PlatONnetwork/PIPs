@@ -28,6 +28,8 @@ Created: 2021-06-01
 
 - 开放获取Slashing状态的getWaitSlashingNodeList接口[issue-1787](https://github.com/PlatONnetwork/PlatON-Go/issues/1787)
 
+- 根据社区提议对Alaya网络随机性选举节点出块，累积二项分布函数期望值做出调整，具体请参考[issue-1785](https://github.com/PlatONnetwork/PlatON-Go/issues/1785)，[讨论](https://forum.latticex.foundation/t/topic/4119)
+
 ## bug修复
 
 - 修复fast同步没有完成的情况下重启节点失败[issue-1775](https://github.com/PlatONnetwork/PlatON-Go/issues/1775)
@@ -35,8 +37,6 @@ Created: 2021-06-01
 - 修复预估gas接口时，对于治理合约的预估，必须要传入gasPrice的问题[issue-1758](https://github.com/PlatONnetwork/PlatON-Go/issues/1758)
 
 - 修复call调用偶现返回-32000错误码问题[issue-1769](https://github.com/PlatONnetwork/PlatON-Go/issues/1769)
-
-- 修复节点选举随机性问题[issue-1785](https://github.com/PlatONnetwork/PlatON-Go/issues/1785)
 
 - 修复节点fast同步失败后出现 `BAD BLOCK` 的问题[issue-1783](https://github.com/PlatONnetwork/PlatON-Go/issues/1783)
 
