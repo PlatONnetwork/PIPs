@@ -78,10 +78,7 @@ curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": [
 #### 2.需要新增或修改的接口
 以太坊中的一些RPC接口PlatON中没有或实现不同，我们需要对此进行适配。
 
-1. ChainId获取接口
-以太坊在EIP-695中增加该接口的支持，在PlatON中同样需要添加该接口的支持
-
-2. miner.setEtherbase
+1. miner.setEtherbase
 因为PlatON中区块提议人都已明确制定固定的收益地址，因此miner.setEtherbase接口无需在PlatON中实现。
 
 ### solidity合约兼容
