@@ -42,6 +42,8 @@ Created: 2021-06-01
 
 - 修复WASM跨合约调用时 `platon_caller` 值错误问题[issue-1779](https://github.com/PlatONnetwork/PlatON-Go/issues/1779)
 
+- 同步修复以太坊txpool批量插入交易返回值错乱问题[ETH-21683](https://github.com/ethereum/go-ethereum/pull/21683)
+
 ## 说明
 
   本次升级将兼容历史数据，需要链上治理升级。详见讨论[链接](https://forum.latticex.foundation/t/topic/5113)
