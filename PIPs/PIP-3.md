@@ -28,7 +28,7 @@ Created: 2021-06-01
 
 - 开放获取Slashing状态的getWaitSlashingNodeList接口[issue-1787](https://github.com/PlatONnetwork/PlatON-Go/issues/1787)
 
-- 根据社区提议对Alaya网络随机性选举节点出块，累积二项分布函数期望值做出调整，具体请参考[issue-1785](https://github.com/PlatONnetwork/PlatON-Go/issues/1785)，[讨论](https://forum.latticex.foundation/t/topic/4119)
+- 根据社区提议对Alaya网络随机性选举节点出块，累积二项分布函数期望值由30调整为43，候选节点增加洗牌以增加随机性，具体请参考[issue-1785](https://github.com/PlatONnetwork/PlatON-Go/issues/1785)，[讨论](https://forum.latticex.foundation/t/topic/4119)
 
 ## bug修复
 
