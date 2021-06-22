@@ -52,7 +52,7 @@ Created: 2021-06-01
 
 Commit-ID: 待定
 
-[English_translation]
+[English translation]
 # PIP-3：PlatON Network optimization and upgrade proposal
 
 ## Purpose

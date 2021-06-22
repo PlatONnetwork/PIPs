@@ -98,7 +98,7 @@ curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": [
 本次升级将兼容历史数据，需链上治理升级。详见讨论[链接](https://forum.latticex.foundation/t/topic/4636)
 
 
-[English_translation]
+[English translation]
 # PIP-2：The PIP of fully Compatible with Ethereum
 
 ## Abstract
