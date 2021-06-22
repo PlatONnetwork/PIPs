@@ -1,10 +1,10 @@
 ---
 PIP: 2
-Topic: 兼容以太坊
+Topic: 兼容以太坊(Compatible with Ethereum)
 Author: clearly
 Status: Draft 
 Type: Text
-Description: 底层全面兼容以太坊的生态
+Description: 底层全面兼容以太坊的生态(The underlying technology shall be fully compatible with Ethereum's ecosystem)
 Created: 2021-05-28
 ---
 
@@ -99,16 +99,6 @@ curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": [
 
 
 [English translation]
----
-PIP: 2
-Topic: Compatible with Ethereum
-Author: clearly
-Status: Draft 
-Type: Text
-Description: The underlying technology shall be fully compatible with Ethereum's ecosystem
-Created: 2021-05-28
----
-
 # PIP-2：The PIP of fully Compatible with Ethereum
 
 ## Abstract
