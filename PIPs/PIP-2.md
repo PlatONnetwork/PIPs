@@ -113,10 +113,10 @@ The key points PlatON and Ethereum are currently incompatible:
 
 - The address format is different. PlatON uses the address format of Bech32, while Ethereum uses the address format of Eip55
 - The Token units are different. PlatON's Token units are LAT/VON and Ethereum's are Ether/WEI
-- Some functions are not implemented in Platon or are implemented differently. Functions such as block.difficlty, miner. SetEtherbase, etc., the Ethereum contracts using these functions may not work on PlatON and may need to be adjusted accordingly, but these functions are rarely used.
+- Some functions are not implemented in PlatON or are implemented differently. Functions such as block.difficlty, miner. SetEtherbase, etc., the Ethereum contracts using these functions may not work on PlatON and may need to be adjusted accordingly, but these functions are rarely used.
 - The block header timestamp is different, Ethereum in seconds and PlatON in milliseconds
 
-From these differences, Platon can be made compatible with Ethereum with minimal changes.
+From these differences, PlatON can be made compatible with Ethereum with minimal changes.
 
 ## Implementation notes
 
@@ -124,7 +124,7 @@ From these differences, Platon can be made compatible with Ethereum with minimal
 
 #### 1.Compatible interface format
 PlatON's current address encoding format is Bech32, while Ethereum's current address encoding format is Eip55, so we need to make compatibility in address format.
-Parts of the PlatON RPC interface have a namespace of 'PlatON', such as' PlatON_getBalance '. Some of the RPC interfaces on Ethereum have a namespace of 'eth', such as' eth_getBalance '. Both functions have the same functionality, so we need namespace-compatibility.
+Parts of the PlatON RPC interface have a namespace of 'PlatON', such as 'platon_getBalance'. Some of the RPC interfaces on Ethereum have a namespace of 'eth', such as' eth_getBalance '. Both functions have the same functionality, so we need namespace-compatibility.
 
 To do this, we distinguish interface calls in different formats by version numbers, where 1.0 is the RPC interface for PlatON and 2.0 is the RPC interface for Ethereum.
 

@@ -57,7 +57,7 @@ Commit-ID: 待定
 
 ## Purpose
 
-Upgrade the underlying node network of Platon to fix the unresolved problems that have affected the user experience since the start of the autonomous network.
+Upgrade the underlying node network of PlatON to fix the unresolved problems that have affected the user experience since the start of the autonomous network.
 
 ## New features
 
