@@ -31,15 +31,17 @@ Created: 2021-05-28
 ### RPC接口兼容
 
 #### 1.接口格式兼容
-PlatON目前的地址编码格式为bech32，以太坊目前的地址编码格式为EIP55，因此我们要在地址格式上做兼容。
-PlatON部分RPC接口的命名空间为'PlatON'，如’PlatON_getBalance’。以太坊部分RPC接口的命名空间为'eth'，如‘eth_getBalance’。两个函数的功能一致，因此我们要在命名空间上兼容。
-
-为此，我们通过版本号来区分不同格式的接口调用，其中1.0为PlatON的RPC接口，2.0为以太坊的RPC接口。
+PlatON目前的地址编码格式为bech32，以太坊目前的地址编码格式为EIP55，对于Request需同时兼容两种地址格式，Result只支持bech32的地址编码格式。
+接口的命令空间需兼容eth，将eth等同于platon，如“eth_getBalance”与“platon_getBalance”效果等同。
 
 示例:
 ```
 // Request 
-curl -X POST --data '{"jsonrpc":"1.0","method":"platon_getBalance","params":["lat1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp7pn3ep", "latest"],"id":1}'
+///PlatON接口,地址格式为bech32
+curl -X POST --data '{"jsonrpc":"2.0","method":"platon_getBalance","params":["lat1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp7pn3ep", "latest"],"id":1}'
+
+//以太坊接口,地址格式为EIP55
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],"id":1}'
 
 // Result
 {
@@ -48,30 +50,15 @@ curl -X POST --data '{"jsonrpc":"1.0","method":"platon_getBalance","params":["la
   "result": "0x0234c8a3397aab58" // 158972490234375000
 }
 
-// Result
-curl -X POST --data '{"jsonrpc":"1.0", "method": "platon_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"], "id": 1}' localhost:8545
-
-// Result
-{"jsonrpc":"1.0","id":1,"result":"lat1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp7pn3ep"}
-
-```
-
-兼容以太坊接口的rpc版本,与以太坊现有rpc版本保持一致，均为2.0,示例如下:
-```
 // Request
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],"id":1}'
+//PlatON接口，命令空间为platon
+curl -X POST --data '{"jsonrpc":"2.0", "method": "platon_accounts", "params": [], "id": 1}' 
+
+//以太坊接口，命令空间为eth
+curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_accounts", "params": [], "id": 1}' 
 
 // Result
-{
-  "id":1,
-  "jsonrpc": "2.0",
-  "result": "0x0234c8a3397aab58" // 158972490234375000
-}
-
-
-curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_getStorageAt", "params": ["0x295a70b2de5e3953354a6a8344e616ed314d7251", "0x0", "latest"], "id": 1}' localhost:8545
-
-{"jsonrpc":"2.0","id":1,"result":"0x00000000000000000000000000000000000000000000000000000000000004d2"}
+{"jsonrpc":"1.0","id":1,"result":["lat1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp7pn3ep"]}
 
 ```
 
