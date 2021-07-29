@@ -31,35 +31,32 @@ Created: 2021-05-28
 ### RPC接口兼容
 
 #### 1.接口格式兼容
-PlatON目前的地址编码格式为bech32，以太坊目前的地址编码格式为EIP55，对于Request需同时兼容两种地址格式，Result只支持bech32的地址编码格式。
-接口的命令空间需兼容eth，将eth等同于platon，如“eth_getBalance”与“platon_getBalance”效果等同。
+扩展JSON-RPC 2.0，对request请求对象做出以下修改:  
+ - 增加bech32字段，Booleans类型。bech32为true表示此次rpc调用中地址部分的编解码格式为bech32，默认为EIP55。
+  - 优化method字段,在命名空间中增加对eth的支持，eth等同于platon。
 
-示例:
+接收request的流程做如下优化：
+1. 优先通过method中是否包含eth/platon来区分是以太坊/PlatON调用
+    ```
+    // PlatON调用
+    curl -X POST --data '{"jsonrpc":"2.0","method":"platon_getBalance","params":["lat1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp7pn3ep", "latest"],"id":1}'
+    // 以太坊调用
+    curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],"id":1}'
+    ```
+2. 如果method相同，通过request中bech32的值来区分是以太坊/PlatON调用
+    ```
+    // PlatON调用
+    curl -X POST --data '{"jsonrpc":"2.0","bech32":true, "method": "txpool_contents", "params": [], "id": 1}'
+    // 以太坊调用
+    curl -X POST --data '{"jsonrpc":"2.0", "method": "txpool_contents", "params": [], "id": 1}'
+    ```
+
+对于来自以太坊的调用的响应对象，地址的编解码格式为EIP55。对于来自PlatON的调用的响应对象，地址的编解码格式为bech32。示例:
 ```
-// Request 
-///PlatON接口,地址格式为bech32
-curl -X POST --data '{"jsonrpc":"2.0","method":"platon_getBalance","params":["lat1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp7pn3ep", "latest"],"id":1}'
-
-//以太坊接口,地址格式为EIP55
-curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],"id":1}'
-
-// Result
-{
-  "id":1,
-  "jsonrpc": "1.0",
-  "result": "0x0234c8a3397aab58" // 158972490234375000
-}
-
-// Request
-//PlatON接口，命令空间为platon
-curl -X POST --data '{"jsonrpc":"2.0", "method": "platon_accounts", "params": [], "id": 1}' 
-
-//以太坊接口，命令空间为eth
-curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_accounts", "params": [], "id": 1}' 
-
-// Result
-{"jsonrpc":"1.0","id":1,"result":["lat1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp7pn3ep"]}
-
+ // PlatON调用
+ {"jsonrpc":"2.0","id":1,"result":["lat1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp7pn3ep"]}
+ // 以太坊调用
+ {"jsonrpc":"2.0","id":1,"result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]}
 ```
 
 #### 2.需要新增或修改的接口
