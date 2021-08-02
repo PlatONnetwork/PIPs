@@ -1,85 +1,85 @@
 ---
 PIP: 2
-Topic: 兼容以太坊(Compatible with Ethereum)
+Topic: 兼容以太坊 (Compatible with Ethereum)
 Author: clearly
 Status: Draft 
 Type: Text
-Description: 底层全面兼容以太坊的生态(The underlying technology shall be fully compatible with Ethereum's ecosystem)
+Description: 底层全面兼容以太坊的生态 (The underlying technology shall be fully compatible with Ethereum's ecosystem)
 Created: 2021-05-28
 ---
 
 # PIP-2：关于全面兼容以太坊的提案
 
 ## 摘要
-为吸引更多开发者参与PlatON网络中来，降低开发者将Dapp应用从以太坊迁移到PlatON上的开发成本，PlatON应该在如SDK、EVM、RPC接口、solidity语言等方面兼容以太坊。
+为吸引更多开发者参与 PlatON 网络中来，降低开发者将 Dapp 应用从以太坊迁移到 PlatON 上的开发成本，PlatON 应该在如 SDK、EVM、RPC 接口、solidity 语言等方面兼容以太坊。
 
 ## 动机
 
-以太坊作为世界上第二大市值的区块链网络，也是最大的智能合约平台，有着众多的开发者和成熟的社区，许多开发者是通过以太坊和他们的智能合约进入区块链世界的，他们对使用以太坊智能合约以及与开发Dapp相关的工具、SDK等都很熟练，但对PlatON不熟悉，因此如果能在Dapp开发层面实现对以太坊的兼容，无疑将很大程度上提升PlatON对开发者的吸引力，生态也会逐渐壮大起来。
+以太坊作为世界上第二大市值的区块链网络，也是最大的智能合约平台，有着众多的开发者和成熟的社区，许多开发者是通过以太坊和他们的智能合约进入区块链世界的，他们对使用以太坊智能合约以及与开发 Dapp 相关的工具、SDK 等都很熟练，但对 PlatON 不熟悉，因此如果能在 Dapp 开发层面实现对以太坊的兼容，无疑将很大程度上提升 PlatON 对开发者的吸引力，生态也会逐渐壮大起来。
 
-当前PlatON和以太坊不兼容的地方:
+当前 PlatON 和以太坊不兼容的地方:
 
-- 地址格式不同，PlatON采用bech32的地址格式，以太坊采用的是EIP55的地址格式
-- Token单位不同，PlatON的Token单位为lat/von，以太坊的为ether/wei
-- 部分函数在PlatON中没有实现或者实现不同。如block.difficlty、miner.setEtherbase等函数，使用到这些函数的以太坊合约可能不适合在PlatON上运行，需要进行相应调整，不过这些函数很少使用
-- 区块头时间戳不同，以太网为秒，PlatON为毫秒
+- 地址格式不同，PlatON 采用 bech32 的地址格式，以太坊采用的是 EIP55 的地址格式
+- Token 单位不同，PlatON 的 Token 单位为 lat/von，以太坊的为 ether/wei
+- 部分函数在 PlatON 中没有实现或者实现不同。如 block.difficulty、miner.setEtherbase 等函数，使用到这些函数的以太坊合约可能不适合在 PlatON 上运行，需要进行相应调整，不过这些函数很少使用
+- 区块头时间戳不同，以太网为秒，PlatON 为毫秒
 
-由以上差异可知，PlatON只需要极小的改动就可以实现对以太坊的兼容。
+由以上差异可知，PlatON 只需要极小的改动就可以实现对以太坊的兼容。
 
 ## 实现说明
 
-### RPC接口兼容
+### RPC 接口兼容
 
-#### 1.接口格式兼容
-扩展JSON-RPC 2.0，对request请求对象做出以下修改:  
- - 增加bech32字段，Booleans类型。bech32为true表示此次rpc调用中地址部分的编解码格式为bech32，默认为EIP55。
-  - 优化method字段,在命名空间中增加对eth的支持，eth等同于platon。
+#### 1. 接口格式兼容
+扩展 JSON-RPC 2.0，对 request 请求对象做出以下修改:  
+  - 增加 bech32 字段，Booleans 类型。bech32 为 true 表示此次 rpc 调用中地址部分的编解码格式为 bech32，默认为 EIP55。
+  - 优化 method 字段，在命名空间中增加对 eth 的支持，eth 等同于 platon。
 
-接收request的流程做如下优化：
-1. 优先通过method中是否包含eth/platon来区分是以太坊/PlatON调用
+接收 request 的流程做如下优化：
+1. 优先通过 method 中是否包含 eth/platon 来区分是以太坊 / PlatON 调用
     ```
-    // PlatON调用
+    // PlatON 调用
     curl -X POST --data '{"jsonrpc":"2.0","method":"platon_getBalance","params":["lat1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp7pn3ep", "latest"],"id":1}'
     // 以太坊调用
     curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],"id":1}'
     ```
-2. 如果method相同，通过request中bech32的值来区分是以太坊/PlatON调用
+2. 如果 method 相同，通过 request 中 bech32 的值来区分是以太坊 / PlatON 调用
     ```
-    // PlatON调用
+    // PlatON 调用
     curl -X POST --data '{"jsonrpc":"2.0","bech32":true, "method": "txpool_contents", "params": [], "id": 1}'
     // 以太坊调用
     curl -X POST --data '{"jsonrpc":"2.0", "method": "txpool_contents", "params": [], "id": 1}'
     ```
 
-对于来自以太坊的调用的响应对象，地址的编解码格式为EIP55。对于来自PlatON的调用的响应对象，地址的编解码格式为bech32。示例:
+对于来自以太坊的调用的响应对象，地址的编解码格式为 EIP55。对于来自 PlatON 的调用的响应对象，地址的编解码格式为 bech32。示例:
 ```
- // PlatON调用
+ // PlatON 调用
  {"jsonrpc":"2.0","id":1,"result":["lat1zqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp7pn3ep"]}
  // 以太坊调用
  {"jsonrpc":"2.0","id":1,"result":["0x407d73d8a49eeb85d32cf465507dd71d507100c1"]}
 ```
 
-#### 2.需要新增或修改的接口
-以太坊中的一些RPC接口PlatON中没有或实现不同，我们需要对此进行适配。
+#### 2. 需要新增或修改的接口
+以太坊中的一些 RPC 接口 PlatON 中没有或实现不同，我们需要对此进行适配。
 
 1. miner.setEtherbase
-因为PlatON中区块提议人都已明确制定固定的收益地址，因此miner.setEtherbase接口无需在PlatON中实现。
+因为 PlatON 中区块提议人都已明确制定固定的收益地址，因此 miner.setEtherbase 接口无需在 PlatON 中实现。
 
-### solidity合约兼容
+### solidity 合约兼容
 
-#### 1.底层指令兼容
-经排查，EVM底层指令PlatON和以太坊已经基本兼容,不兼容的指令有:
+#### 1. 底层指令兼容
+经排查，EVM 底层指令 PlatON 和以太坊已经基本兼容，不兼容的指令有:
 - TIMESTAMP
-  PlatON返回的是单位是ms，以太坊返回的单位是s.该指令的返回单位需要统一改为s。
+  PlatON 返回的是单位是 ms，以太坊返回的单位是 s. 该指令的返回单位需要统一改为 s。
 
-#### 2.编译器兼容
+#### 2. 编译器兼容
 
-编译器兼容以太坊主要体现在solidity合约中的地址格式，当前PlatON的合约编译器只支持bech32个，为实现对以太坊合约的兼容，只需在每个solidity大版本的最新版(0.4.26，0.5.17，0.6.12，0.7.6和0.8.4）实现对EIP55地址格式的兼容即可。
+编译器兼容以太坊主要体现在 solidity 合约中的地址格式，当前 PlatON 的合约编译器只支持 bech32 个，为实现对以太坊合约的兼容，只需在每个 solidity 大版本的最新版 (0.4.26，0.5.17，0.6.12，0.7.6 和 0.8.4）实现对 EIP55 地址格式的兼容即可。
 
-对于Token单位来说，为提示用户或开发者当前是在PlatON网络中使用合约，因此不建议对以太坊Token单位 `ether/wei` 实现兼容。
+对于 Token 单位来说，为提示用户或开发者当前是在 PlatON 网络中使用合约，因此不建议对以太坊 Token 单位 `ether/wei` 实现兼容。
 
 ## 说明
-本次升级将兼容历史数据，需链上治理升级。详见讨论[链接](https://forum.latticex.foundation/t/topic/4636)
+本次升级将兼容历史数据，需链上治理升级。详见讨论 [链接](https://forum.latticex.foundation/t/topic/4636)
 
 
 [English translation]
@@ -97,7 +97,7 @@ The key points PlatON and Ethereum are currently incompatible:
 
 - The address format is different. PlatON uses the address format of Bech32, while Ethereum uses the address format of Eip55
 - The Token units are different. PlatON's Token units are LAT/VON and Ethereum's are Ether/WEI
-- Some functions are not implemented in PlatON or are implemented differently. Functions such as block.difficlty, miner. SetEtherbase, etc., the Ethereum contracts using these functions may not work on PlatON and may need to be adjusted accordingly, but these functions are rarely used.
+- Some functions are not implemented in PlatON or are implemented differently. Functions such as block.difficulty, miner. SetEtherbase, etc., the Ethereum contracts using these functions may not work on PlatON and may need to be adjusted accordingly, but these functions are rarely used.
 - The block header timestamp is different, Ethereum in seconds and PlatON in milliseconds
 
 From these differences, PlatON can be made compatible with Ethereum with minimal changes.
@@ -171,4 +171,4 @@ Compiler compatibility with Ethereum is mainly embodied in the address format of
 For Token units, compatibility with Ethereum Token units `ether/wei` is not recommended as a reminder that the user or developer is currently using the contract in the PlatON network.
 
 ## Description
-This upgrade will be compatible with historical data and requires an on-chain governance upgrade. See the discussion[Link](https://forum.latticex.foundation/t/topic/4636)
+This upgrade will be compatible with historical data and requires an on-chain governance upgrade. See the discussion [Link](https://forum.latticex.foundation/t/topic/4636)
