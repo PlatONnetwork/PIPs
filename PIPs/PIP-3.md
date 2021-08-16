@@ -2,7 +2,7 @@
 PIP: 3
 Topic: PlatON网络优化升级提案
 Author: alliswell
-Status: Draft
+Status: Vote
 Type: Text
 Description: PlatON网络优化升级，修复已知问题
 Created: 2021-06-01
@@ -50,5 +50,5 @@ Created: 2021-06-01
 
 本次升级的版本号为：1.1.0
 
-Commit-ID: 待定
+Commit-ID: f86c9f8469105ab1969316aefe259b9b5ab3308e
 
