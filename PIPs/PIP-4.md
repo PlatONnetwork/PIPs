@@ -65,7 +65,7 @@ Created: 2021-08-01
 
 ### 连接机制
 
-请参看 [分组共识下的P2P方案](https://github.com/PlatONnetwork/PIPs/blob/master/PIPs/PIP-3.md)
+请参看 [分组共识下的P2P方案](PIP-5.md)
 
 ### 广播规则
 
