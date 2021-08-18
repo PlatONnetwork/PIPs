@@ -71,9 +71,12 @@ curl -X POST --data '{"jsonrpc":"2.0", "method": "eth_accounts", "params": [], "
 ### solidity合约兼容
 
 #### 1.底层指令兼容
-经排查，EVM底层指令PlatON和以太坊已经基本兼容,不兼容的指令有:
+
+EVM底层指令Alaya和以太坊已经基本兼容,不兼容的指令有:
 - TIMESTAMP
-  PlatON返回的是单位是ms，以太坊返回的单位是s.该指令的返回单位需要统一改为s。
+  Alaya返回的是单位是ms，以太坊返回的单位是s，经开发者充分[讨论](https://github.com/PlatONnetwork/PlatON-Go/issues/1816)，由于出块间隔不同，该指令应该与以太坊有所区分，暂不修改。
+- DIFFICULTY
+  由于共识机制不同，该指令在Alaya没用，但虚机底层以及编译器都做了支持，无需修改。
 
 #### 2.编译器兼容
 
