@@ -2,7 +2,7 @@
 PIP: 3
 Topic: PlatON网络优化升级提案(PlatON Network optimization and upgrade proposal)
 Author: alliswell
-Status: Vote
+Status: Final
 Type: Text
 Description: PlatON网络优化升级，修复已知问题(PlatON Network optimization and upgrade, repair known problems)
 Created: 2021-06-01
