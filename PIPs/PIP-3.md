@@ -2,7 +2,7 @@
 PIP: 3
 Topic: PlatON网络优化升级提案(PlatON Network optimization and upgrade proposal)
 Author: alliswell
-Status: Vote
+Status: Final
 Type: Text
 Description: PlatON网络优化升级，修复已知问题(PlatON Network optimization and upgrade, repair known problems)
 Created: 2021-06-01
@@ -95,4 +95,4 @@ None
 
 The version number of this upgrade is: 1.1.0
 
-Commit-ID: To be determined
+Commit-ID: f86c9f8469105ab1969316aefe259b9b5ab3308e
