@@ -4,7 +4,7 @@ Topic: PlatON网络对双ChaiID的支持
 Author: benbaley
 Status: Draft 
 Type: Upgrade
-Description: 提议在PlatON主网络对ChainID `100`和`210425`同时进行支持和适配
+Description: 提议在PlatON主网络对ChainID 100和210425同时进行支持和适配
 Created: 2022-02-11
 ---
 
@@ -46,20 +46,32 @@ P2P握手消息中加入ChainID，用于验证节点是否是属于同一个链�
 1. 交易验证
 
 v = v - 2*100（原ChainID）
+
 v = v - 8
+
 if v > 28 
+
 then
+
   v = v - (新ChainID - 原ChainID)
+  
   判断v是否为27或28
+  
   是
+  
      使用新新ChainID进行判断
+	 
   否
+  
      签名非法
+	 
 else
+
   使用原ChainID进行判断
 
 2. P2P握手
-handle处理ping、pong、findnode、neighbors消息时，直接对Rest字段判断，为两个ChainID其一者则验证通过。
+
+handle处理ping、pong、findnode、neighbors消息时，直接对Rest字段判断，为两个ChainID其一者则验证通过，当收到的ping消息带的chainid是旧值，则pong返回的消息也返回旧值，同理适用于findnode、neighbors消息。
 
 3. opCode(0x46)
 
@@ -75,7 +87,7 @@ EVM执行CHAINID指令时，根据大版本号判断，提案前使用旧ChainID
 
 2. P2P链接的影响
 
-由于新节点使用新ChainID，在节点发现时（UDP消息，对应Ping、Pong、Findnode、Neighbors）新节点消息带新ChainID，该消息会被旧节点认为是不属于当前链，新节点可以发现旧节点，旧节点也发现不了新节点，且旧节点可以链上新节点，但新节点只能链新节点。
+由于新节点使用新ChainID，在节点发现时（UDP消息，对应Ping、Pong、Findnode、Neighbors）新节点消息带新ChainID，该消息会被旧节点认为是不属于当前链，新节点不能发现旧节点，且只能主动连新节点，不能主动连接旧节点，但旧节点可以发现新节点，也可以主动连接新节点。
 
 3. DApp需要对ChainID更新适配
 
