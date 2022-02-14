@@ -41,6 +41,30 @@ PlatON主网当前的ChainID值是100，在[ethereum-lists/chains](https://githu
 
 P2P握手消息中加入ChainID，用于验证节点是否是属于同一个链，可以通过判断握手消息中携带的ChainID是否为PlatON所支持的2个ChainID中的一个来适配。
 
+## 实现
+
+1. 交易验证
+
+v = v - 2*100（原ChainID）
+v = v - 8
+if v > 28 
+then
+  v = v - (新ChainID - 原ChainID)
+  判断v是否为27或28
+  是
+     使用新新ChainID进行判断
+  否
+     签名非法
+else
+  使用原ChainID进行判断
+
+2. P2P握手
+handle处理ping、pong、findnode、neighbors消息时，直接对Rest字段判断，为两个ChainID其一者则验证通过。
+
+3. opCode(0x46)
+
+EVM执行CHAINID指令时，根据大版本号判断，提案前使用旧ChainID， 提案升级成功后按新ChainID返回。
+
 ## 影响分析
 
 底层实现本提案后，将有以下影响：
