@@ -25,7 +25,12 @@ PlatON主网当前的ChainID值是100，在[ethereum-lists/chains](https://githu
 
 可以通过PlatON特有的升级提案先在主网络确保对新链ID`210425`的支持，同时兼容旧ChainID`100`，这样既可以很好的适配诸如MetaMask之类的工具，方便新DApp的快速开发，又可以同时兼容当前已经在运行中的应用。
 
-- 未来择机停止对ChainID`100`的支持
+- 继续使用旧ChainID`100`
+
+考虑到大部分应用都是从节点上读取的ChainID，在提案没生效前，静态（硬编码）的ChainID必须是同一个，因此必须在这一阶段沿用旧ChainID。
+同时，P2P链接也是使用ChainID校验，必须在升级期间保证新、旧节点相互兼容。
+
+- 未来停止对ChainID`100`的支持
 
 在完成第一阶段升级后，所有新的应用将直接使用新ChainID开发和运行，对于旧的DApp来说（只针对使用了ChainID的应用），可以有充足的时间进行适配和升级，在经历充分的适配调整时间以后，需要再发起新的升级提案，停止使用旧ChainID。
 
@@ -43,7 +48,11 @@ P2P握手消息中加入ChainID，用于验证节点是否是属于同一个链�
 
 ## 实现
 
+设新ChainID为210425
+
 1. 交易验证
+
+解析交易签名后,Transaction->ChainId()->deriveChainId()
 
 v = v - 2*100（原ChainID）
 
@@ -53,29 +62,42 @@ if v > 28
 
 then
 
-  v = v - (新ChainID - 原ChainID)
-  
-  判断v是否为27或28
-  
-  是
-  
-     使用新新ChainID进行判断
+  v = v - 2*(210425 - 100)
 	 
-  否
-  
-     签名非法
-	 
-else
+endif
 
-  使用原ChainID进行判断
+判断v是否为27或28
+
+是
+
+   ValidateSignatureValues()
+ 
+否
+
+ 签名非法
+
 
 2. P2P握手
 
-handle处理ping、pong、findnode、neighbors消息时，直接对Rest字段判断，为两个ChainID其一者则验证通过，当收到的ping消息带的chainid是旧值，则pong返回的消息也返回旧值，同理适用于findnode、neighbors消息。
+handle处理ping、pong、findnode、neighbors消息时，直接对Rest字段判断，
+
+ChainID ∈ (100,210425) 则验证通过
+
+当收到的ping消息带的chainid是旧值，则pong返回的消息也返回旧值，同理适用于findnode、neighbors消息。
 
 3. opCode(0x46)
 
 EVM执行CHAINID指令时，根据大版本号判断，提案前使用旧ChainID， 提案升级成功后按新ChainID返回。
+
+## 计划
+
+完成ChainID更新需要3个阶段：
+
+阶段1. 通过提案升级，增加对新ChainID`210425`的支持，默认ChainID仍为`100`
+
+阶段2. 通过小版本升级，将节点默认ChainID升级为`210425`，同时将第1步提案的分叉判断修改为使用提案生效块高
+
+阶段3. 通过提案升级，停止对旧ChainID`100`d 支持，同时在P2P模块UDP消息中将ChainID校验去掉对旧值的兼容
 
 ## 影响分析
 
@@ -83,15 +105,11 @@ EVM执行CHAINID指令时，根据大版本号判断，提案前使用旧ChainID
 
 1. 需要链上治理升级
 
-意味着需要分叉， 新客户端将兼容旧的交易的ChainID和旧节点， 但旧客户端无法支持新ChainID的交易和新节点。
+阶段1和阶段3都需要提案升级，意味着需要分叉， 新客户端将兼容旧的交易的ChainID和旧节点， 但旧客户端无法支持新ChainID的交易和新节点。
 
-2. P2P链接的影响
+2. DApp需要对ChainID更新适配
 
-由于新节点使用新ChainID，在节点发现时（UDP消息，对应Ping、Pong、Findnode、Neighbors）新节点消息带新ChainID，该消息会被旧节点认为是不属于当前链，新节点不能发现旧节点，且只能主动连新节点，不能主动连接旧节点，但旧节点可以发现新节点，也可以主动连接新节点。
-
-3. DApp需要对ChainID更新适配
-
-由于新版本客户端ChainID更新为`210425`,EVM获取ChaiID的指令需要根据版本号（链上）来判断返回新值或是旧值，因此对于DApp中合约逻辑使用了ChainID的应用，需要重新进行适配，对于在合约中硬编码了ChainID逻辑的应用，只能通过重新部署新合约后将旧合约中数据迁移致新约的方式进行适配，对于在应用层（链下）使用ChainID的情形，需要在应用层代码逻辑中自行适配。
+阶段3升级后，由于新版本客户端ChainID更新为`210425`,EVM获取ChaiID的指令需要根据版本号（链上）来判断返回新值或是旧值，因此对于DApp中合约逻辑使用了ChainID的应用，需要重新进行适配，对于在合约中硬编码了ChainID逻辑的应用，只能通过重新部署新合约后将旧合约中数据迁移致新约的方式进行适配，对于在应用层（链下）使用ChainID的情形，需要在应用层代码逻辑中自行适配。
 
 ## 链接
 
