@@ -87,17 +87,17 @@ ChainID ∈ (100,210425) 则验证通过
 
 3. opCode(0x46)
 
-EVM执行CHAINID指令时，根据大版本号判断，提案前使用旧ChainID， 提案升级成功后按新ChainID返回。
+NewEVM的时候根据状态初始化chainConfig，EVM执行CHAINID指令时，按原逻辑返回chainconfig.chainid不变。
 
 ## 计划
 
 完成ChainID更新需要3个阶段：
 
-阶段1. 通过提案升级，增加对新ChainID`210425`的支持，默认ChainID仍为`100`
+阶段1. 通过提案升级，增加对新ChainID`210425`的支持，默认ChainID仍为`100`，EVM中CHAINID指令仍返回旧CHAINID
 
 阶段2. 通过小版本升级，将节点默认ChainID升级为`210425`，同时将第1步提案的分叉判断修改为使用提案生效块高
 
-阶段3. 通过提案升级，停止对旧ChainID`100`d 支持，同时在P2P模块UDP消息中将ChainID校验去掉对旧值的兼容
+阶段3. 通过提案升级，停止对旧ChainID`100`d 支持，同时在P2P模块UDP消息中将ChainID校验去掉对旧值的兼容，EVM中CHAINID指令返回新CHAINID
 
 ## 影响分析
 
