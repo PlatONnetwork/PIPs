@@ -19,7 +19,7 @@ PlatON主网当前的ChainID值是100，在[ethereum-lists/chains](https://githu
 1. 存在不同链上的交易在PlatON网络上重放风险
 2. 如MetaMask之类的第三方应用不能唯一适配到PlatON网络上
 
-因此，我们的最终目标是将主网络的ChainID由当前的`100`更新为`210425`，为达成这个目标需要分2步进行：
+因此，我们的最终目标是将主网络的ChainID由当前的`100`更新为`210425`，为达成这个目标需要分3步进行：
 
 - 支持新ChainID`210425`
 
@@ -97,7 +97,7 @@ NewEVM的时候根据状态初始化chainConfig，EVM执行CHAINID指令时，�
 
 阶段2. 通过小版本升级，将节点默认ChainID升级为`210425`，同时将第1步提案的分叉判断修改为使用提案生效块高
 
-阶段3. 通过提案升级，停止对旧ChainID`100`d 支持，同时在P2P模块UDP消息中将ChainID校验去掉对旧值的兼容，EVM中CHAINID指令返回新CHAINID
+阶段3. 通过提案升级，停止对旧ChainID `100` 的支持，同时在P2P模块UDP消息中将ChainID校验去掉对旧值的兼容，EVM中CHAINID指令返回新CHAINID
 
 ## 影响分析
 
