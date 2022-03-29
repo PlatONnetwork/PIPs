@@ -99,5 +99,5 @@ for i := 1; i < int(randomWordsNum); i++ {
 
 ## 参考
 
-[Verifiable source of randomness for smart contract developers](https://chain.link/chainlink-vrf)
+- [Verifiable source of randomness for smart contract developers](https://chain.link/chainlink-vrf)
 
