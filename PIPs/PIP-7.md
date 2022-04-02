@@ -89,17 +89,17 @@ ChainID ∈ (100,210425) 则验证通过
 
 3. opCode(0x46)
 
-NewEVM的时候根据状态初始化chainConfig，EVM执行CHAINID指令时，按原逻辑返回chainconfig.chainid不变。
+NewEVM的时候根据状态初始化chainConfig，EVM执行CHAINID指令时，按原逻辑返回chainconfig.chainid不变，本指令将在第三阶段实施。
 
 ## 计划
 
 完成ChainID更新需要3个阶段：
 
-阶段1. 通过提案升级，增加对新ChainID`210425`的支持，默认ChainID仍为`100`，EVM中CHAINID指令返回新CHAINID`210425`
+阶段1. 通过提案升级，增加对新ChainID`210425`的支持，默认ChainID仍为`100`
 
 阶段2. 通过小版本升级，将节点默认ChainID升级为`210425`，同时将第1步提案的分叉判断修改为使用提案生效块高
 
-阶段3. 通过提案升级，停止对旧ChainID `100` 的支持，同时在P2P模块UDP消息中将ChainID校验去掉对旧值的兼容，EVM中CHAINID指令返回新CHAINID
+阶段3. 通过提案升级，EVM中CHAINID指令返回新CHAINID`210425`，同时停止对旧ChainID `100` 的支持，同时在P2P模块UDP消息中将ChainID校验去掉对旧值的兼容，EVM中CHAINID指令返回新CHAINID
 
 ## 影响分析
 
@@ -111,7 +111,7 @@ NewEVM的时候根据状态初始化chainConfig，EVM执行CHAINID指令时，�
 
 2. DApp需要对ChainID更新适配
 
-阶段1升级后，由于新版本客户端ChainID更新为`210425`,EVM获取ChaiID的指令需要根据版本号（链上）来判断返回新值或是旧值，因此对于DApp中合约逻辑使用了ChainID的应用，需要重新进行适配，对于在合约中硬编码了ChainID逻辑的应用，只能通过重新部署新合约后将旧合约中数据迁移致新约的方式进行适配，对于在应用层（链下）使用ChainID的情形，需要在应用层代码逻辑中自行适配。
+阶段3升级后，由于新版本客户端ChainID更新为`210425`,EVM获取ChaiID的指令需要根据版本号（链上）来判断返回新值或是旧值，因此对于DApp中合约逻辑使用了ChainID的应用，需要重新进行适配，对于在合约中硬编码了ChainID逻辑的应用，只能通过重新部署新合约后将旧合约中数据迁移致新约的方式进行适配，对于在应用层（链下）使用ChainID的情形，需要在应用层代码逻辑中自行适配。
 
 ## 链接
 

@@ -33,20 +33,92 @@ PlatON网络中的所有验证人节点都将对区块Header中的Nonce字段做
 系统通过PrecompiledContract的`VrfInnerContract`获取区块Header中的Nonce，合约地址为 `lat1xqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpe9fgva` (`0x3000000000000000000000000000000000000001`)
 调用时，用户需要传入产生随机数的个数， 该PrecompiledContract返回随机数数组。
 
-- VRFCoordinator
+- 调用
 
-PlatON随机数方案无需和任何链下系统对接，当用户通过`VRFCoordinator->requestRandomWords`请求随机数时，系统通过内置合约`VrfInnerContract`获取随机数后直接回调Consumer合约的`fulfillRandomWords`接口，规则为：
+智能合约中可以使用`delegatecall`请求随机数，如：
+
+```
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+/**
+ * 调用PlatON内置合约生成VRF随机数
+ */
+contract VRF {
+
+  error InvalidRandomWords(uint32 numWords, uint256 returnValueLength);
+
+  // VrfInnerContract 内置合约地址
+  address vrfInnerContractAddr = 0x3000000000000000000000000000000000000001;
+
+  // 32个字节表示uint256
+  uint32 base = 32;
+
+  /**
+   * 调用 VrfInnerContract 内置合约生成VRF随机数
+   * @param numWords 随机数的个数
+   */
+  function requestRandomWords(uint32 numWords) internal returns (uint256[] memory) {
+    bytes memory data = abi.encode(numWords);
+    bytes memory returnValue = assemblyCall(data, vrfInnerContractAddr);
+
+    if (numWords * base != returnValue.length) {
+        revert InvalidRandomWords(
+            numWords,
+            returnValue.length
+        );
+    }
+
+    uint256[] memory randomWords = new uint256[](numWords);
+    for(uint i = 0; i < numWords; i++) {
+        uint start = i * base;
+        randomWords[i] = sliceUint(returnValue, start);
+    }
+
+    return randomWords;
+  }
+
+  /**
+   * delegatecall 合约
+   * @param data 合约input data
+   * @param addr 合约地址
+   */
+    function assemblyCall(bytes memory data, address addr) internal returns (bytes memory) {
+        uint256 len = data.length;
+        uint retsize;
+        bytes memory resval;
+        assembly {
+            let result := delegatecall(gas(), addr, add(data, 0x20), len, 0, 0)
+            retsize := returndatasize()
+        }
+        resval = new bytes(retsize);
+        assembly {
+            returndatacopy(add(resval, 0x20), 0, returndatasize())
+        }
+        return resval;
+    }
+
+    function sliceUint(bytes memory bs, uint start) internal pure returns (uint256) {
+        require(bs.length >= start + 32, "slicing out of range");
+        uint256 x;
+        assembly {
+            x := mload(add(bs, add(0x20, start)))
+        }
+        return x;
+    }
+}
+```
+
+注意：
 
 1. 用户请求单个随机数
 
 内置合约通过计算随机源VRF与当前用户交易hash的异或直接返回结果
 
 ```
-
 for i := 0; i < txHash.Length; i++ {
 	randomWords[i] = currentNonces[i] ^ txhash[i]
 }
-
 ```
 
 2. 用户请求随机数个数为 n（ n > 1）
@@ -81,11 +153,11 @@ for i := 1; i < int(randomWordsNum); i++ {
 
 1. 随机数是“同步”被返回给用户的
 
-这意味着用户通过 `VRFCoordinator`合约中的`requestRandomWords`接口不需要返回 `requestID` 即可获得随机数结果，因此与异步回调相关的参数如`keyHash`、`minimumRequestConfirmations`、`callbackGasLimit`也是不需要关注的（报了保持接口的兼容性，参数将被保留），同时，用户在使用时需要注意Consumer中`fulfillRandomWords`接口中如果有关于requestId的判断是不需要的。
+这意味着用户在智能合约中请求后可立即使用随机数，无需异步处理。
 
 2. 用户不需要预付费
 
-在一些其他公链相近的方案中，随机数是通过“链下生成+链上验证”的方式提供给用户使用， 由于随机数Oracle节点需要异步调用`fulfillRandomWords`接口，因此需要为请求随机数的Consumer应用合约pre-fund一定数量的Token，而在PlatON方案中Consumer请求随机数是同步返回的， 因此不需要用户预付费。
+在一些其他公链相近的方案中，随机数是通过“链下生成+链上验证”的方式提供给用户使用，在PlatON方案中Consumer请求随机数是同步返回的， 因此不需要用户预付费。
 
 ## 安全性分析
 
@@ -96,8 +168,3 @@ for i := 1; i < int(randomWordsNum); i++ {
 2. 每个区块对应一个随机源
 
 因随机源来源于区块的Nonce，因此在同一个区块内的所有随机数均有同一个随机源产生，因随机源是安全的，故所有衍生的随机数亦是安全的。
-
-## 参考
-
-- [Verifiable source of randomness for smart contract developers](https://chain.link/chainlink-vrf)
-
