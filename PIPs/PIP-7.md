@@ -93,13 +93,15 @@ NewEVM的时候根据状态初始化chainConfig，EVM执行CHAINID指令时，�
 
 ## 计划
 
-完成ChainID更新需要3个阶段：
+完成ChainID更新需要4个阶段：
 
 阶段1. 通过提案升级，增加对新ChainID`210425`的支持，默认ChainID仍为`100`
 
 阶段2. 通过小版本升级，将节点默认ChainID升级为`210425`，同时将第1步提案的分叉判断修改为使用提案生效块高
 
-阶段3. 通过提案升级，EVM中CHAINID指令返回新CHAINID`210425`，同时停止对旧ChainID `100` 的支持，同时在P2P模块UDP消息中将ChainID校验去掉对旧值的兼容，EVM中CHAINID指令返回新CHAINID
+阶段3. 通过提案升级，EVM中CHAINID指令返回新CHAINID`210425`，该阶段升级对部分已有的应用会产生影响，需要各个应用排查和评估
+
+阶段4. 通过提案升级，停止对旧ChainID `100` 的支持，同时在P2P模块UDP消息中将ChainID校验去掉对旧值的兼容
 
 ## 影响分析
 
@@ -107,7 +109,7 @@ NewEVM的时候根据状态初始化chainConfig，EVM执行CHAINID指令时，�
 
 1. 需要链上治理升级
 
-阶段1和阶段3都需要提案升级，意味着需要分叉， 新客户端将兼容旧的交易的ChainID和旧节点， 但旧客户端无法支持新ChainID的交易和新节点。
+阶段1、阶段3和阶段4都需要提案升级，意味着需要分叉， 新客户端将兼容旧的交易的ChainID和旧节点， 但旧客户端无法支持新ChainID的交易和新节点。
 
 2. DApp需要对ChainID更新适配
 
