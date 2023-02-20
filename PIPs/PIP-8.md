@@ -2,7 +2,7 @@
 PIP: 8
 Topic: PlatON网络对链上随机数的支持
 Author: benbaley
-Status: Draft 
+Status: Final 
 Type: Upgrade
 Description: 在PlatON网络上支持链上获取可验证随机数
 Created: 2022-03-28

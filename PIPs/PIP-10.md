@@ -2,7 +2,7 @@
 PIP:  10
 Topic: 1.3.0升级提案
 Author: alliswell
-Status: Draft
+Status: Final
 Type: Upgrade
 Description: 支持委托锁定，EVM获取链ID返回PlatON新链ID 210425
 Created: 2022-08-08
@@ -49,4 +49,4 @@ Solidity中使用assembly`chainid`指令或者`block.chainid`指令获取到的�
 
 本次升级的版本号为：1.3.0
 
-Commit-ID: *[待定]*
+Commit-ID: *8ddcea2d05d9b45efb6aa71a1ec49b006c957df3*

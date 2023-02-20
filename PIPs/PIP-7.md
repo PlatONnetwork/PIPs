@@ -2,7 +2,7 @@
 PIP: 7
 Topic: PlatON网络对双ChaiID的支持
 Author: benbaley
-Status: Draft 
+Status: Final 
 Type: Upgrade
 Description: 在PlatON主网络对ChainID 100和210425同时进行支持和适配
 Created: 2022-02-11

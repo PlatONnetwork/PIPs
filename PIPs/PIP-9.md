@@ -2,7 +2,7 @@
 PIP:  9
 Topic: 1.2.0升级提案
 Author: alliswell
-Status: Draft
+Status: Final
 Type: Upgrade
 Description: 支持新ChainID，支持链上随机数
 Created: 2022-04-02

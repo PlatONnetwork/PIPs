@@ -2,7 +2,7 @@
 PIP: 5
 Topic: 分组共识下的P2P方案
 Author: luowei
-Status: Draft 
+Status: Final 
 Type: Text
 Description: 本内容为分组共识下的P2P连接方案，针对目前 Giskard协议演进成分组共识的一种设计方案
 Created: 2021-08-01
