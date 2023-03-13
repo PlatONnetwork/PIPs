@@ -2,7 +2,7 @@
 PIP: 6
 Topic: 委托锁定
 Author: clearly
-Status: Draft 
+Status: Final 
 Type: Upgrade
 Description: 支持委托锁定
 Created: 2021-07-12

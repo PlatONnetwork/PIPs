@@ -2,7 +2,7 @@
 PIP: 7
 Topic: PlatON网络ChainID更新提案
 Author: benbaley
-Status: Draft 
+Status: Final 
 Type: Upgrade
 Description: 在PlatON主网络将ChainID 由100逐步更新为210425
 Created: 2022-02-11

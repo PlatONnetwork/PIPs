@@ -2,7 +2,7 @@
 PIP: 2
 Topic: 兼容以太坊 (Compatible with Ethereum)
 Author: clearly
-Status: Draft 
+Status: Final 
 Type: Text
 Description: 底层全面兼容以太坊的生态 (The underlying technology shall be fully compatible with Ethereum's ecosystem)
 Created: 2021-05-28
