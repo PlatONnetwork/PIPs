@@ -59,6 +59,30 @@ GetValidatorByBlockNumber
 | pubKey    | 64byte | 节点公钥    |
 | blsPubKey | 96byte | 节点bls公钥 |
 
+##### platon_getBlockQuorumCertByHash
+
+通过`RPC`调用，参数和返回值如下：
+
+> 参数
+
+| 字段      | 类型 | 描述         |
+| --------- | ---- | ------------ |
+| blockHash | 数组 | 区块Hash集合 |
+
+> 返回数据
+>
+> 类型：集合，**返回顺序和集合个数可能和传参顺序、个数不一致，请结合 blockHash 字段匹配相应区块**
+
+| 字段         | 类型   | 描述                         |
+| ------------ | ------ | ---------------------------- |
+| epoch        | uint64 | 共识周期数                       |
+| viewNumber   | uint64 | 共识窗口数                     |
+| blockHash    | 32byte | 区块Hash                     |
+| blockNumber  | uint64 | 区块Number                   |
+| blockIndex   | uint32 | 区块索引号                   |
+| signature    | 64byte | BLS聚合签名                  |
+| validatorSet | string | 参与聚合签名的验证节点集合，<br />xx_xxx_ 表示当前共识周期共有7个验证人，其中第 1/2/4/5/6 序号的验证人参与了该聚合签名 |
+
 2. 对pre-eip155交易的兼容
 
 根据[EIP-2470](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2470.md)中关于DApps需要在不同链中使用同一个instance需求的解决方案，链底层需要对无链ID签名（pre-eip155）交易兼容才能实现。为进一步促进PlatON生态繁荣，应该兼容pre-eip155交易。
