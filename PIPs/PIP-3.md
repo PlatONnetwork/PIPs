@@ -1,10 +1,10 @@
 ---
 PIP: 3
-Topic: PlatON网络优化升级提案
+Topic: PlatON网络优化升级提案(PlatON Network optimization and upgrade proposal)
 Author: alliswell
-Status: Draft
+Status: Final
 Type: Text
-Description: PlatON网络优化升级，修复已知问题
+Description: PlatON网络优化升级，修复已知问题(PlatON Network optimization and upgrade, repair known problems)
 Created: 2021-06-01
 ---
 
@@ -50,5 +50,49 @@ Created: 2021-06-01
 
 本次升级的版本号为：1.1.0
 
-Commit-ID: 待定
+Commit-ID: f86c9f8469105ab1969316aefe259b9b5ab3308e
 
+[English translation]
+# PIP-3：PlatON Network optimization and upgrade proposal
+
+## Purpose
+
+Upgrade the underlying node network of PlatON to fix the unresolved problems that have affected the user experience since the start of the autonomous network.
+
+## New features
+
+None
+
+## Optimization function
+
+- Optimize transaction dissemination strategy, send transaction hash value to nodes that do not directly broadcast transactions[issue-1780](https://github.com/PlatONnetwork/PlatON-Go/issues/1780)
+
+- Support the feature of RPC returning chainid (refer to EIP-695)
+
+- Open the getWaitSlashingNodeList interface for obtaining Slashing status[issue-1787](https://github.com/PlatONnetwork/PlatON-Go/issues/1787)
+
+- According to the community proposal, take the random election of the Alaya network blocking node. The expected value of the cumulative binomial distribution function is adjusted from 30 to 43. The candidate nodes are shuffled to increase the randomness. For details, please refer to[issue-1785](https://github.com/PlatONnetwork/PlatON-Go/issues/1785)，[Discuss](https://forum.latticex.foundation/t/topic/4119)
+
+## bug fix
+
+- Fix the failure to restart the node when the fast synchronization is not completed[issue-1775](https://github.com/PlatONnetwork/PlatON-Go/issues/1775)
+
+- Fix the problem that gasPrice must be passed in for the estimation of the governance contract when the gas estimate interface is called[issue-1758](https://github.com/PlatONnetwork/PlatON-Go/issues/1758)
+
+- Fix the problem that the call method occasionally returns -32000 error code[issue-1769](https://github.com/PlatONnetwork/PlatON-Go/issues/1769)
+
+- Fix the problem of `BAD BLOCK` after the node fast synchronization fails[issue-1783](https://github.com/PlatONnetwork/PlatON-Go/issues/1783)
+
+- Fix the problem of the value of `platon_caller` being incorrect when WASM is called across contracts[issue-1779](https://github.com/PlatONnetwork/PlatON-Go/issues/1779)
+
+- Synchronously fix the problem of incorrect return value of Ethereum txpool's batch inserting transaction[ETH-21683](https://github.com/ethereum/go-ethereum/pull/21683)
+
+## Description
+
+  This upgrade will be compatible with historical data and requires on-chain governance upgrades. See discussion for details[Link](https://forum.latticex.foundation/t/topic/5113)
+
+## Version
+
+The version number of this upgrade is: 1.1.0
+
+Commit-ID: f86c9f8469105ab1969316aefe259b9b5ab3308e

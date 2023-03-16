@@ -2,7 +2,7 @@
 PIP: 4
 Topic: 使用 BLS 聚合签名的分组验签共识方案
 Author: niuxiaojie
-Status: Draft 
+Status: Final 
 Type: Text
 Description: 分组共识本质上是一种节点扩容方案，它的目的是为了支撑更多的候选节点和共识节点参与到共识当中
 Created: 2021-08-01
