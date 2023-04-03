@@ -2,7 +2,7 @@
 PIP:  11
 Topic: 1.4.0升级提案
 Author: alliswell
-Status: Draft
+Status: Final
 Type: Upgrade
 Description: 轻节点协议支持、pre-eip155交易的兼容
 Created: 2023-02-17
@@ -103,4 +103,4 @@ GetValidatorByBlockNumber
 
 本次升级的版本号为：1.4.0
 
-Commit-ID: *[待定]*
+Commit-ID: *e11fe5c58e455c1cb637025d2fb167a54af4faf6*
