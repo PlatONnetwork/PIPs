@@ -1,38 +1,136 @@
 ---
-PIP:  13
-Topic: 1.5.0升级提案
-Author: alliswell
-Status: Draft
+PIP: 13
+Topic: PlatON网络BLS公钥更新提案
+Author: TraceBundy、benbaley
+Status: Draft 
 Type: Upgrade
-Description: 移除对旧链ID（100）的支持，适配以太坊柏林升级和伦敦升级
-Created: 2023-12-08
+Description: 在PlatON主网络将BLS签名以及验签算法适配
+Created: 2023-06-15
 ---
 
-# PIP-13：PlatON版本升级-1.5.0
+## 背景
 
-## 目的
+PlatON最早于2018年9月开始基于BLS聚合签名设计Giskard共识协议，核心开发团队最初基于[herumi](https://github.com/herumi/bls)实现的bls签名算法开发，使用的是`default`方式（即PublicKey->G2,Signature->G1）,在以太坊团队提出[EIP-2537](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2537.md)后，越来越多的应用开始逐渐倾向于使用ETH2方式（即PublicKey->G1,Signature->G2）支持BLS，为了保持和EVM生态的兼容性，PlatON应当适配ETH2方式。
 
-`PlatON`自[PIP-7](https://github.com/PlatONnetwork/PIPs/blob/master/PIPs/PIP-7.md)提案开始支持双链ID已经过了三个`Minor`版本的过渡期，当前绝大部分应用都已经调整到使用新的链ID（210425），故此，本次升级将按计划实施[PIP-7](https://github.com/PlatONnetwork/PIPs/blob/master/PIPs/PIP-7.md)提案的第四阶段：停止对旧链ID的支持。
+## 概述
 
-除此之外，本次升级`PlatON`将启用对以太坊[柏林升级](https://ethereum.org/en/history/#berlin)和[伦敦升级](https://ethereum.org/en/history/#london)的适配，开始支持`EIP-2718`、`EIP-2930`、`EIP-1559`等类型的交易。
+PlatON的Giskard算法要求验证人公开BLS的PubKey，新算法的PubKey使用G1，因此升级需要验证人重新声明新的公钥，这样才能保证Giskard能正确的适配新BLS算法。
 
-## 新特性
+## 原理
 
-- PIP-7提案的第四阶段（[停止对旧链ID的支持](https://github.com/PlatONnetwork/PIPs/blob/master/PIPs/PIP-7.md)）
-- 启用对柏林升级以及伦敦升级的适配
+| Cyclic Group | PlatON    | ETH2      | Length   |
+| ------------ | --------- | --------- | -------- |
+| Fr           | SecretKey | SecretKey | 32 bytes |
+| G1           | Signature | PublicKey | 48 bytes |
+| G2           | PublicKey | Signature | 96 bytes |
 
-## 优化内容
+ETH2算法中PublicKey是48字节，而且在没有私钥的情况下新公钥无法从旧公钥推导出来，因此要保证Giskard不间断运行，需要在算法升级前先将各验证人新的公钥收集到合约中，收集完成后才能在一个统一的区块高度切换新算法。
 
-本次升级同时对以太坊`1.11.0`以前的版本优化内容做了更新。
+## 实现
 
-## 影响说明
+- 现状
+  
+  | 名称  | PlatON | ETH2 |
+  | --- | ------ | ---- |
+  | 私钥  | 小端 | 大端 |
+  | 公钥  | 小端 | 大端 |
+  | 签名  | 小端 | 大端 |
 
-### 链ID相关
+- 目标
 
-升级后PlatON网络将不再支持交易签名中带链ID值为100的交易，仍在使用旧链ID的应用需要在升级前完成旧链ID到新链ID的迁移，以保证业务能正常运行。
+封装bls相关的接口：
 
-## 版本信息
+```golang
 
-本次升级的版本号为：1.5.0
+// SecretKey represents a BLS secret or private key.
+type SecretKey interface {
+	PublicKey() PublicKey
+	//P2() []byte
+	Sign(msg []byte) Signature
+	Marshal() []byte
+	SetLittleEndian(buf []byte) error
+	GetLittleEndian() []byte
+	MakeSchnorrNIZKP() SchnorrProof
+}
 
-Commit-ID: *b67ea9cf2a0e911f927879f53b9d44c1d943e662*
+// PublicKey represents a BLS public key.
+type PublicKey interface {
+	Marshal() []byte
+	Copy() PublicKey
+	Aggregate(p2 PublicKey) PublicKey
+	IsInfinite() bool
+	Equals(p2 PublicKey) bool
+}
+
+// Signature represents a BLS signature.
+type Signature interface {
+	Verify(pubKey PublicKey, msg []byte) bool
+	// Deprecated: Use FastAggregateVerify or use this method in spectests only.
+	AggregateVerify(pubKeys []PublicKey, msgs [][32]byte) bool
+	FastAggregateVerify(pubKeys []PublicKey, msg [32]byte) bool
+	Eth2FastAggregateVerify(pubKeys []PublicKey, msg [32]byte) bool
+	Marshal() []byte
+	Copy() Signature
+}
+
+type SchnorrProof interface {
+	Marshal() []byte
+	Unmarshal([]byte) error
+	Verify(key PublicKey) error
+}
+
+```
+
+对于同一个私钥对应的swpPubKey和ethPubkey，使用以下方法转换：
+
+```golang
+
+func (s *SecretKey) createKey() {
+	if s.key == nil {
+		switch BlsVersion {
+		case Bls12381:
+			s.key = &eth.SecretKey{}
+		case Bls12381Swap:
+			s.key = &swap.SecretKey{}
+		}
+	}
+}
+
+func (s *SecretKey) ToSwapKey() *SecretKey {
+	key := &swap.SecretKey{}
+	key.SetLittleEndian(s.GetLittleEndian())
+	return &SecretKey{
+		key: key,
+	}
+}
+
+func (s *SecretKey) ToEthKey() *SecretKey {
+	key := &eth.SecretKey{}
+	key.SetLittleEndian(s.GetLittleEndian())
+	return &SecretKey{
+		key: key,
+	}
+}
+
+```
+
+使用key和验证signature根据具体的场景创建不同的实例，动态调用。
+
+
+## 计划
+
+完成BLS算法更新需要2个阶段：
+
+阶段1：
+在1.5.0中启用新版本声明和提案投票交易中声明新PublicKey。
+
+阶段2：
+在1.6.0升级过程中通过提案投票或版本声明收集各个验证人新的BLS公钥，提案通过后启用新BLS算法。
+
+## 影响分析
+
+本提案共分2次链上升级，除验证人节点需要重新声明新PubKey外无其他影响，阶段2完成升级后新BLS签名和验签算法和以太坊2.0兼容。
+
+## 链接
+
+- [IETF BLS signature draft standard v4](https://tools.ietf.org/html/draft-irtf-cfrg-bls-signature-04)
