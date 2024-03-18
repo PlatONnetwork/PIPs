@@ -1,5 +1,5 @@
 ---
-PIP:  13
+PIP:  14
 Topic: 1.5.0升级提案
 Author: alliswell
 Status: Draft
@@ -8,7 +8,7 @@ Description: 移除对旧链ID（100）的支持，适配以太坊柏林升级�
 Created: 2023-12-08
 ---
 
-# PIP-13：PlatON版本升级-1.5.0
+# PIP-14：PlatON版本升级-1.5.0
 
 ## 目的
 
