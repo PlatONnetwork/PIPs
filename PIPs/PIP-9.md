@@ -14,7 +14,6 @@ Created: 2022-04-02
 
 近期关于在PlatON网络上使用新ChainID以及支持链上获取随机数的方案经过反复讨论和论证，提案合理且方法可行，本次升级将支持这2个提案。
 
-
 ## 新特性
 
 - [PlatON网络对双ChaiID的支持](https://github.com/PlatONnetwork/PIPs/blob/master/PIPs/PIP-7.md)

@@ -117,7 +117,7 @@ contract VRF {
 
 ```
 for i := 0; i < txHash.Length; i++ {
-	randomWords[i] = currentNonces[i] ^ txhash[i]
+    randomWords[i] = currentNonces[i] ^ txhash[i]
 }
 ```
 
@@ -126,27 +126,25 @@ for i := 0; i < txHash.Length; i++ {
 内置合约 `VrfInnerContract` 通过计算随机源VRF与当前用户交易hash的异或，再与当前区块的前n个区块的VRF分别异或，顺序为从parent区块到`currentBlockNumber-n+1`块，然后将所有计算结果依次拷贝到返回结果的数组中
 
 ```
-
 for i := 0; i < txHash.Length; i++ {
-	randomWords[i] = currentNonces[i] ^ txhash[i]
+    randomWords[i] = currentNonces[i] ^ txhash[i]
 }
 
 vrf := handler.GetVrfHandlerInstance()
 nonceInVrf, err := vrf.Load(v.Evm.ParentHash)
 
 for i := 1; i < int(randomWordsNum); i++ {
-	// 优先从VrfHandler中获取nonce, 当获取不到则从区块中拿
-	if i+1 > len(nonceInVrf) {
-		preNonce = vrf2.ProofToHash(v.Evm.GetNonce(currentBlockNum - uint64(i) - 1))
-	} else {
-		preNonce = nonceInVrf[len(nonceInVrf)-i-1]
-	}
-	start := i * common.HashLength
-	for j := 0; j < common.HashLength; j++ {
-		randomNumbers[j+start] = randomNumbers[j] ^ preNonce[j]
-	}
+    // 优先从VrfHandler中获取nonce, 当获取不到则从区块中拿
+    if i+1 > len(nonceInVrf) {
+        preNonce = vrf2.ProofToHash(v.Evm.GetNonce(currentBlockNum - uint64(i) - 1))
+    } else {
+        preNonce = nonceInVrf[len(nonceInVrf)-i-1]
+    }
+    start := i * common.HashLength
+    for j := 0; j < common.HashLength; j++ {
+        randomNumbers[j+start] = randomNumbers[j] ^ preNonce[j]
+    }
 }
-
 ```
 
 ## 注意事项

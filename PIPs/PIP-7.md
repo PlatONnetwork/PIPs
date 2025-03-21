@@ -65,7 +65,7 @@ if v > 28
 then
 
   v = v - 2*(210425 - 100)
-	 
+
 endif
 
 判断v是否为27或28
@@ -73,11 +73,10 @@ endif
 是
 
    ValidateSignatureValues()
- 
+
 否
 
  签名非法
-
 
 2. P2P握手
 

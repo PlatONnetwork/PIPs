@@ -20,6 +20,8 @@ Created: 2023-12-08
 
 - PIP-7提案的第四阶段（[停止对旧链ID的支持](https://github.com/PlatONnetwork/PIPs/blob/master/PIPs/PIP-7.md)）
 - 启用对柏林升级以及伦敦升级的适配
+- 禁止以合约地址作为Call调用的sender
+- 调整PlatON最大验证人数量为225
 
 ## 优化内容
 
@@ -36,4 +38,4 @@ Created: 2023-12-08
 
 本次升级的版本号为：1.5.0
 
-Commit-ID: *fb7196c6605648984253abd197c37d40caa94b8f*
+Commit-ID: *f1ff12d855ab5017603c270abb1e7138010e6c33*
